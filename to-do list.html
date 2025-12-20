@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>To-Do List</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,#8c0de7,#46e95e,#ed41c8,#1bc6e8);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* CARD */
+.todo-card{
+  background:#fff;
+  width:380px;
+  padding:25px;
+  border-radius:14px;
+}
+
+/* TITLE */
+h2{
+  color:black;
+  margin-bottom:18px;
+}
+
+/* INPUT */
+.input-area{
+  display:flex;
+  background:#f1f1f1;
+  border-radius:30px;
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.input-area input{
+  flex:1;
+  border:none;
+  outline:none;
+  padding:12px 18px;
+  background:transparent;
+}
+
+.input-area button{
+  background:#1bc6e8;
+  color:#fff;
+  border:none;
+  padding:0 28px;
+  cursor:pointer;
+}
+.input-area button:hover{
+  background:#46e95e;
+}
+
+/* LIST */
+ul{
+  list-style:none;
+}
+
+li{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 0;
+}
+
+/* LEFT */
+.task-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+/* CUSTOM CIRCLE */
+.check{
+  width:30px;
+  height:30px;
+  border:3px solid #1bc6e8;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+/* TICK */
+.check::after{
+  content:"✓";
+  color:black;
+  font-size:20px;
+  display:none;
+}
+
+.completed .check{
+  background:whitesmoke;
+  border-color:#46e95e;
+}
+
+.completed .check::after{
+  display:block;
+}
+
+/* TEXT */
+.task-text{
+  font-size:25px;
+}
+
+.completed .task-text{
+  text-decoration:line-through;
+  color:gray;
+}
+
+/* DELETE */
+.delete{
+  cursor:pointer;
+  font-size:40px;
+  color:#999;
+}
+
+.delete:hover{
+  color:red;
+}
+</style>
+</head>
+
+<body>
+
+<div class="todo-card">
+  <h2 style="text-align:center;font-size:42px;">To-Do List🎯</h2>
+
+  <div class="input-area">
+    <input type="text" id="taskInput" placeholder="Set your goal today!!">
+    <button onclick="addTask()">Add</button>
+  </div>
+
+  <ul id="taskList"></ul>
+</div>
+
+<script>
+function addTask(){
+  const input = document.getElementById("taskInput");
+  const text = input.value.trim();
+  if(text === "") return;
+
+  const li = document.createElement("li");
+
+  const left = document.createElement("div");
+  left.className = "task-left";
+
+  const check = document.createElement("div");
+  check.className = "check";
+  check.onclick = () => li.classList.toggle("completed");
+
+  const span = document.createElement("span");
+  span.className = "task-text";
+  span.textContent = text;
+
+  const del = document.createElement("span");
+  del.className = "delete";
+  del.textContent = "×";
+  del.onclick = () => li.remove();
+
+  left.appendChild(check);
+  left.appendChild(span);
+
+  li.appendChild(left);
+  li.appendChild(del);
+
+  document.getElementById("taskList").appendChild(li);
+  input.value = "";
+}
+</script>
+
+</body>
+</html>
